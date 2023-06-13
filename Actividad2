@@ -1,1 +1,3873 @@
-
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/anttox/C8280/blob/main/Actividad2\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "g5p1zhVdHRJH"
+      },
+      "source": [
+        "## Numpy\n",
+        "\n",
+        "NumPy es la librería central para computación científica en Python. Proporciona un objeto de matriz multidimensional de alto rendimiento y herramientas para trabajar con estas matrices.\n",
+        "\n",
+        "#### Matrices\n",
+        "\n",
+        "Una matriz NumPy es una colección de valores de tipos de datos similares y está indexada por una tupla de números no negativos. El rango de la matriz es el número de dimensiones, y la forma de una matriz es una tupla de números que dan el tamaño de la matriz a lo largo de cada dimensión.\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "fEYOnETfqaMK",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "9499d123-83e3-4944-cba9-31a88ca89e39"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Tiempo usando lista de Python: 0.0003364086151123047\n",
+            "Tiempo usando matriz NumPy: 0.0055773258209228516\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Ejemplo\n",
+        "from __future__ import division\n",
+        "import time\n",
+        "import numpy as np\n",
+        "\n",
+        "\n",
+        "tam_vec = 1000\n",
+        "def lista_python():\n",
+        "    t1 = time.time()\n",
+        "    X = range(tam_vec)\n",
+        "    Y = range(tam_vec)\n",
+        "    Z = []\n",
+        "    for i in range(len(X)):\n",
+        "        Z.append(X[i] + Y[i])\n",
+        "    return time.time() - t1\n",
+        "\n",
+        "def matriz_numpy():\n",
+        "    t1 = time.time()\n",
+        "    X = np.arange(tam_vec)\n",
+        "    Y = np.arange(tam_vec)\n",
+        "    Z = X + Y\n",
+        "    return time.time() - t1\n",
+        "\n",
+        "time1 = lista_python()\n",
+        "time2 = matriz_numpy()\n",
+        "\n",
+        "print(\"Tiempo usando lista de Python:\", time1)\n",
+        "print(\"Tiempo usando matriz NumPy:\", time2)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "OufDp2ReqaMM",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "d45624d1-64f0-4be7-adf3-ffe5374d8ec1"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Version de Numpy: 1.22.4\n"
+          ]
+        }
+      ],
+      "source": [
+        "#import numpy\n",
+        "#numpy.__version__\n",
+        "\n",
+        "import numpy as np\n",
+        "\n",
+        "print(\"Version de Numpy:\", np.__version__)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "BhyocdoIqaMM"
+      },
+      "source": [
+        "Podemos inicializar matrices NumPy a partir de listas de Python anidadas y acceder a los elementos mediante corchetes."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "oV13ZLdhqaMN",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "0bb50f5b-01ca-4b1b-e459-b7d95664c21e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "<class 'numpy.ndarray'>\n",
+            "(3,)\n",
+            "0\n",
+            "1\n",
+            "2\n",
+            "[5 1 2]\n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "# Creamos una matriz de rango 1\n",
+        "a = np.array([0, 1, 2])\n",
+        "print (type(a))\n",
+        "\n",
+        "# Imprimimos la dimension de la matriz\n",
+        "print (a.shape)\n",
+        "print (a[0])\n",
+        "print (a[1])\n",
+        "print (a[2])\n",
+        "\n",
+        "# Cambiamos un elemento de un array\n",
+        "a[0] = 5\n",
+        "print (a)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "AM3wLIGFqaMN",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4009f153-ff3d-47eb-c299-a4fe89677776"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "(2, 3)\n",
+            "[[0 1 2]\n",
+            " [3 4 5]]\n",
+            "0 1 3\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz de rango 2\n",
+        "b = np.array([[0,1,2],[3,4,5]])\n",
+        "print (b.shape)\n",
+        "print (b)\n",
+        "print (b[0, 0], b[0, 1], b[1, 0])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "cq2gOFB4qaMO",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "fa7430eb-1806-47fa-aaaa-51c8dd311f35"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "(2, 3)\n",
+            "0 1 3\n"
+          ]
+        }
+      ],
+      "source": [
+        "print ( b.shape)\n",
+        "print ( b[0, 0], b[0, 1], b[1, 0])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "pNtk4_8UqaMO"
+      },
+      "source": [
+        "### Creación de una matriz NumPy\n",
+        "\n",
+        "NumPy también proporciona muchas funciones integradas para crear matrices. La mejor manera de aprender esto es a través de ejemplos, así que pasemos al código."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "NyYKtrrGqaMP",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "1dab619e-165e-4c4c-df40-ef6ba548dcf4"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[0. 0. 0.]\n",
+            " [0. 0. 0.]\n",
+            " [0. 0. 0.]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz 3x3 de todos ceros\n",
+        "a = np.zeros((3,3))\n",
+        "print (a)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "mCLST8l6qaMQ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "73c99403-8167-441e-eb3c-5e5ec8c64949"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[1. 1.]\n",
+            " [1. 1.]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz 2x2 de todos 1\n",
+        "b = np.ones((2,2))\n",
+        "print (b)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "6CJQKnPbqaMQ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8ebd6c70-9854-407c-ac4f-2544d0f44e46"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[7 7 7]\n",
+            " [7 7 7]\n",
+            " [7 7 7]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz 3x3 constantes\n",
+        "c = np.full((3,3), 7)\n",
+        "print(c)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "6WrXOZLfqaMR",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e027e4b9-55d1-4452-b2c2-526b2f20d618"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[0.51856572 0.7364212  0.95619108]\n",
+            " [0.93745927 0.50859868 0.35878842]\n",
+            " [0.61814495 0.21056075 0.11678428]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz 3x3 con valores aleatorios\n",
+        "d = np.random.random((3,3))\n",
+        "print (d)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "2Fh7ah1dqaMR",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e9a4486b-c404-4a41-e0ac-7c3733bc916f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[1. 0. 0.]\n",
+            " [0. 1. 0.]\n",
+            " [0. 0. 1.]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz identidad 3x3\n",
+        "e = np.eye(3)\n",
+        "print(e)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "3Z4n3uJbqaMR",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "d1380a53-051a-4462-a464-f63b5c6db597"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[2 3 1 0]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Convertir una lista en una matriz\n",
+        "f = np.array([2, 3, 1,0])\n",
+        "print(f)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "tET5xDZ6qaMR",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b645e42e-4939-4c05-e8b7-be42a08b1b0a"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[ 1  2  3  4  5  6  7  8  9 10]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# arange() crea matrices con valores que se incrementan regularmente\n",
+        "g = np.arange(1,11,1)\n",
+        "print(g)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "RuGyOhkKqaMS",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "82c21270-16e3-4d6e-dc68-10afa75861e8"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[4 5 6 1 2 3]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Mezcla de tupla y listas\n",
+        "\n",
+        "# Creamos una tupla y una lista\n",
+        "tupla = (1, 2, 3)\n",
+        "lista = [4, 5, 6]\n",
+        "\n",
+        "# Convertimos la tupla en un arreglo de NumPy\n",
+        "tupla_np = np.array(tupla)\n",
+        "\n",
+        "# Concatenar la lista y el arreglo de la tupla\n",
+        "h = np.concatenate((lista, tupla_np))\n",
+        "\n",
+        "print(h)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Qqm5sInQqaMS",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "6475867c-96e6-4e55-bc07-173ac0d2008e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[1. 2. 3. 4. 5. 6. 7.]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Crear una matriz de rango con tipo de datos flotante\n",
+        "i = np.arange(1, 8, dtype=np.float64)\n",
+        "print(i)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Ee1Sko4QqaMS"
+      },
+      "source": [
+        "`linspace()`  crea matrices con un numero especifico de elementos que están espaciados por igual entre los valores inicial y final especificados"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "nHza6HfaqaMT",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8b520cd8-31cd-4386-d1e7-3b806d6b21ae"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[ 1.    3.25  5.5   7.75 10.  ]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz con 5 elementos espaciados entre 1 y 10\n",
+        "j = np.linspace(1, 10, 5)\n",
+        "\n",
+        "# Imprimir la matriz\n",
+        "print(j)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "FhxDR-cfqaMT"
+      },
+      "source": [
+        "### Tipos de datos\n",
+        "Una matriz es una colección de elementos del mismo tipo de datos y NumPy admite y proporciona funciones integradas para construir matrices con argumentos opcionales para especificar explícitamente los tipos de datos requeridos."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Um_OqxjPqaMT",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "7e67d701-df14-4835-a6e0-e414f5b50f1f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "int64 float64 int64\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Numpy escoge el tipo de datos\n",
+        "x = np.array([0, 1])\n",
+        "y = np.array([2.0, 3.0])\n",
+        "\n",
+        "# Fuerza un tipo de datos en particular\n",
+        "z = np.array([5, 6], dtype=np.int64)\n",
+        "print (x.dtype, y.dtype, z.dtype)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-lRfXcA7qaMT"
+      },
+      "source": [
+        "**Ejercicio** Completa el siguiente  código."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "5ZJRGP7BqaMT",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "56941b89-1e7c-4441-d255-c57b732beba8"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Atributos de x1:\n",
+            "Dimensión (dim): 1\n",
+            "Forma (shape): (6,)\n",
+            "Tamaño (size): 6\n",
+            "Tipo de datos (dtype): int64\n",
+            "Tamaño del elemento (itemsize): 8\n",
+            "Tamaño total en bytes (nbytes): 48\n",
+            "\n",
+            "Atributos de x2:\n",
+            "Dimensión (dim): 2\n",
+            "Forma (shape): (5, 4)\n",
+            "Tamaño (size): 20\n",
+            "Tipo de datos (dtype): int64\n",
+            "Tamaño del elemento (itemsize): 8\n",
+            "Tamaño total en bytes (nbytes): 160\n",
+            "\n",
+            "Atributos de x3:\n",
+            "Dimensión (dim): 3\n",
+            "Forma (shape): (2, 4, 5)\n",
+            "Tamaño (size): 40\n",
+            "Tipo de datos (dtype): int64\n",
+            "Tamaño del elemento (itemsize): 8\n",
+            "Tamaño total en bytes (nbytes): 320\n"
+          ]
+        }
+      ],
+      "source": [
+        "#np.random.seed(0)\n",
+        "\n",
+        "x1 = np.random.randint(10, size=6)  # matriz 1-d\n",
+        "x2 = np.random.randint(10, size=(5, 4))  # matriz-2d\n",
+        "x3 = np.random.randint(10, size=(2, 4, 5)) # matriz-3d\n",
+        "\n",
+        "# Imprime los atributos : dim, shape, size, dtype, itemsize y nbytes\n",
+        "\n",
+        "# Imprimir atributos de x1\n",
+        "print(\"Atributos de x1:\")\n",
+        "print(\"Dimensión (dim):\", x1.ndim)\n",
+        "print(\"Forma (shape):\", x1.shape)\n",
+        "print(\"Tamaño (size):\", x1.size)\n",
+        "print(\"Tipo de datos (dtype):\", x1.dtype)\n",
+        "print(\"Tamaño del elemento (itemsize):\", x1.itemsize)\n",
+        "print(\"Tamaño total en bytes (nbytes):\", x1.nbytes)\n",
+        "print()\n",
+        "\n",
+        "# Imprimir atributos de x2\n",
+        "print(\"Atributos de x2:\")\n",
+        "print(\"Dimensión (dim):\", x2.ndim)\n",
+        "print(\"Forma (shape):\", x2.shape)\n",
+        "print(\"Tamaño (size):\", x2.size)\n",
+        "print(\"Tipo de datos (dtype):\", x2.dtype)\n",
+        "print(\"Tamaño del elemento (itemsize):\", x2.itemsize)\n",
+        "print(\"Tamaño total en bytes (nbytes):\", x2.nbytes)\n",
+        "print()\n",
+        "\n",
+        "# Imprimir atributos de x3\n",
+        "print(\"Atributos de x3:\")\n",
+        "print(\"Dimensión (dim):\", x3.ndim)\n",
+        "print(\"Forma (shape):\", x3.shape)\n",
+        "print(\"Tamaño (size):\", x3.size)\n",
+        "print(\"Tipo de datos (dtype):\", x3.dtype)\n",
+        "print(\"Tamaño del elemento (itemsize):\", x3.itemsize)\n",
+        "print(\"Tamaño total en bytes (nbytes):\", x3.nbytes)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Del ejercicio anterior hay una manera de reducir el codigo usando FOR"
+      ],
+      "metadata": {
+        "id": "Dz_HAdR7qySJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "np.random.seed(0)\n",
+        "\n",
+        "matrices = [np.random.randint(10, size=6), np.random.randint(10, size=(5, 4)), np.random.randint(10, size=(2, 4, 5))]\n",
+        "\n",
+        "#Usamos enumerate() para iterar obre las matrices y mostrar sus tributos\n",
+        "for i, matriz in enumerate(matrices):\n",
+        "    print(f\"Atributos de x{i+1}:\")\n",
+        "    print(\"Dimensión (dim):\", matriz.ndim)\n",
+        "    print(\"Forma (shape):\", matriz.shape)\n",
+        "    print(\"Tamaño (size):\", matriz.size)\n",
+        "    print(\"Tipo de datos (dtype):\", matriz.dtype)\n",
+        "    print(\"Tamaño del elemento (itemsize):\", matriz.itemsize)\n",
+        "    print(\"Tamaño total en bytes (nbytes):\", matriz.nbytes)\n",
+        "    print()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "_fTDYzIEq4ta",
+        "outputId": "ab737a8f-fd78-40ee-b713-ade0e582f57c"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Atributos de x1:\n",
+            "Dimensión (dim): 1\n",
+            "Forma (shape): (6,)\n",
+            "Tamaño (size): 6\n",
+            "Tipo de datos (dtype): int64\n",
+            "Tamaño del elemento (itemsize): 8\n",
+            "Tamaño total en bytes (nbytes): 48\n",
+            "\n",
+            "Atributos de x2:\n",
+            "Dimensión (dim): 2\n",
+            "Forma (shape): (5, 4)\n",
+            "Tamaño (size): 20\n",
+            "Tipo de datos (dtype): int64\n",
+            "Tamaño del elemento (itemsize): 8\n",
+            "Tamaño total en bytes (nbytes): 160\n",
+            "\n",
+            "Atributos de x3:\n",
+            "Dimensión (dim): 3\n",
+            "Forma (shape): (2, 4, 5)\n",
+            "Tamaño (size): 40\n",
+            "Tipo de datos (dtype): int64\n",
+            "Tamaño del elemento (itemsize): 8\n",
+            "Tamaño total en bytes (nbytes): 320\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hHdZuIRlqaMU"
+      },
+      "source": [
+        "### Indexación de matrices\n",
+        "\n",
+        "NumPy ofrece varias formas de indexar en matrices. La sintaxis estándar de Python `x[obj]` se puede usar para indexar la matriz NumPy, donde `x` es la matriz y `obj` es la selección.\n",
+        "\n",
+        "Hay tres tipos de indexación disponibles:\n",
+        "\n",
+        "* Acceso al campo\n",
+        "\n",
+        "* Recorte básico\n",
+        "\n",
+        "* Indexación avanzada\n",
+        "\n",
+        "#### Acceso al campo\n",
+        "\n",
+        "Si el objeto ndarray es una matriz estructurada, se puede acceder a los campos de la matriz indexando la matriz con cadenas, como un diccionario. La indexación de `x['field-name']` devuelve una nueva vista de la matriz, que tiene la misma dimensión que `x`, excepto cuando el campo es una submatriz  que contiene sólo la parte de los datos en el campo especificado. Los tipos de datos se obtienen con `x.dtype['field-name']`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "OPuRiaI0qaMU",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "ece85a5e-3cc9-4936-dba3-802351a1fe1b"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[(0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])\n",
+            "  (0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])\n",
+            "  (0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])]\n",
+            " [(0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])\n",
+            "  (0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])\n",
+            "  (0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])]\n",
+            " [(0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])\n",
+            "  (0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])\n",
+            "  (0, [[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x = np.zeros((3,3), dtype=[('a', np.int32), ('b', np.float64, (3,3))])\n",
+        "print(x)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "qn7yP1DDqaMU",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8bcdc787-cc5c-485f-d9b4-3067d7b00950"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "x['a'].shape:  (3, 3)\n",
+            "x['a'].dtype:  int32\n",
+            "x['b'].shape:  (3, 3, 3, 3)\n",
+            "x['b'].dtype:  float64\n"
+          ]
+        }
+      ],
+      "source": [
+        "print (\"x['a'].shape: \",x['a'].shape)\n",
+        "print (\"x['a'].dtype: \", x['a'].dtype)\n",
+        "\n",
+        "print (\"x['b'].shape: \", x['b'].shape)\n",
+        "print (\"x['b'].dtype: \", x['b'].dtype)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "CFyYL7BHqaMU"
+      },
+      "source": [
+        "#### Recorte básico\n",
+        "\n",
+        "Las matrices NumPy se pueden dividir, de forma similar a las listas. Debe especificar un segmento para cada dimensión de la matriz, ya que las matrices pueden ser multidimensionales.\n",
+        "\n",
+        "La sintaxis de división básica es `i: j: k`, donde `i` es el índice inicial, `j` es el índice final, `k` es el paso y `k` no es igual a 0. Esto selecciona los elementos `m` en la dimensión correspondiente, con valores de índice `, i + k, ...,i + (m - 1)k` donde `m = q + (r distinto de 0)`,  `q` y `r` son el cociente y el resto se obtiene dividiendo `j - i` entre `k`: `j - i = qk + r`, de modo que `i + (m - 1) k < j`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "gXlzcajJqaMV",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e86a1815-6548-4f38-f3f0-249586f3a1a9"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([6, 8])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 165
+        }
+      ],
+      "source": [
+        "x = np.array([5, 6, 7, 8, 9])\n",
+        "x[1:7:2]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-NhBkQkcqaMV"
+      },
+      "source": [
+        "La `k` negativa hace que los pasos vayan hacia índices más pequeños. Los `i` y `j` negativos se interpretan como `n + i` y `n + j` donde `n` es el número de elementos en la dimensión correspondiente."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "gf66zIIFqaMV",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a5151a9f-79d6-4bef-987b-7646c492c5ed"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[8 9]\n",
+            "[9 8 7]\n"
+          ]
+        }
+      ],
+      "source": [
+        "print (x[-2:5])\n",
+        "print (x[-1:1:-1])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ZZN6H4gfqaMV"
+      },
+      "source": [
+        "Si `n` es el número de elementos en la dimensión que se está recortando. Entonces, si no se proporciona `i`, el valor predeterminado es `0` para  `k > 0` y `n-1` para `k < 0`. Si no se proporciona `j`, el valor predeterminado es `n` para `k > 0` y `-1` para `k < 0`. Si no se proporciona `k`, el valor predeterminado es `1`. Ten en cuenta que `::` es lo mismo que `:` y significa seleccionar todos los índices a lo largo de este eje."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "P4aUAvZDqaMV",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "780bbcb7-9148-488a-dfbd-b621007bce04"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([9])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 167
+        }
+      ],
+      "source": [
+        "x[4:]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "LHGoBk77qaMW"
+      },
+      "source": [
+        "Si el número de objetos en la tupla de selección es menor que N , entonces se asume `:` para cualquier dimensión subsiguiente."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "gGBsOVcTqaMW",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f44362c3-552e-48fb-d507-d58d9e1972e6"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([6, 7, 8])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 169
+        }
+      ],
+      "source": [
+        "x[1:4]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "kWkK2ssnqaMW"
+      },
+      "source": [
+        "Los puntos suspensivos se expanden al número de : objetos necesarios para hacer una tupla de selección de la misma longitud que `x.ndim`. Solo puede haber una sola elipsis presente."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "9EhQ_hm1qaMW",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "fe75d47c-1bd4-450d-bae8-15cc8efc21a0"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[5 6 7 8 9]\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(x)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "L36IfJr7qaMX",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "bfc2f40b-37e0-41e0-915e-4013b60f2e50"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array(5)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 32
+        }
+      ],
+      "source": [
+        "x[...,0]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "HroUqdKDqaMX"
+      },
+      "source": [
+        "#### Ejercicio\n",
+        "\n",
+        "1. Crea una matriz de rango `2` con dimension `(3, 4)`\n",
+        "\n",
+        "2. Usa el recorte para extraer la submatriz que consta de las primeras `2` filas y las columnas `1` y `2`.\n",
+        "\n",
+        "3. Una parte de una matriz es solo una vista de los mismos datos, comprueba quecualquier modificación modificará la matriz original.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "SO70Y-ssqaMX",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "bc63ec14-c2c2-4787-da46-ce72d475ed05"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Matriz original:\n",
+            "[[ 1  2  3  4]\n",
+            " [ 5  6  7  8]\n",
+            " [ 9 10 11 12]]\n",
+            "\n",
+            "Submatriz extraída:\n",
+            "[[2 3]\n",
+            " [6 7]]\n",
+            "\n",
+            "Matriz original después de modificar la submatriz:\n",
+            "[[ 1 99  3  4]\n",
+            " [ 5  6  7  8]\n",
+            " [ 9 10 11 12]]\n",
+            "\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Tu respuesta\n",
+        "# Creamos una matriz de rango 2 con dimensiones (3, 4)\n",
+        "matriz = np.array([[1, 2, 3, 4],\n",
+        "                   [5, 6, 7, 8],\n",
+        "                   [9, 10, 11, 12]])\n",
+        "\n",
+        "# Extraemos la submatriz de las primeras 2 filas y las columnas 1 y 2\n",
+        "submatriz = matriz[:2, 1:3]\n",
+        "\n",
+        "print(\"Matriz original:\")\n",
+        "print(matriz)\n",
+        "print()\n",
+        "\n",
+        "print(\"Submatriz extraída:\")\n",
+        "print(submatriz)\n",
+        "print()\n",
+        "\n",
+        "# Modificamos un elemento de la submatriz\n",
+        "submatriz[0, 0] = 99\n",
+        "\n",
+        "print(\"Matriz original después de modificar la submatriz:\")\n",
+        "print(matriz)\n",
+        "print()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Pw-VG8JqqaMX"
+      },
+      "source": [
+        "Se puede acceder a la matriz de la fila central de dos maneras.\n",
+        "\n",
+        "* Las partes junto con la indexación de enteros darán como resultado una matriz de rango inferior.\n",
+        "\n",
+        "* El uso de solo recortes dará como resultado el mismo rango matriz."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "W1ddrRz4qaMY",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a50ac3f0-42de-43bc-b749-4fda175b7489"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[ 1  2  3  4]\n",
+            " [ 5  6  7  8]\n",
+            " [ 9 10 11 12]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Creamos una matriz de rango 2 array con dimensión (3, 4)\n",
+        "a = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12]])\n",
+        "print (a)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "LYSx-APpqaMY"
+      },
+      "source": [
+        "Dos formas de acceder a los datos en la fila central de la matriz. La combinación de la indexación de enteros con recortes produce una matriz de menor rango, mientras que el uso de solo recortes produce una matriz del mismo rango que la matriz original:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "c3xFq81hqaMY",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e6519178-1350-40a3-95e8-0e8b8902c2de"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[5 6 7 8] (4,)\n",
+            "[[5 6 7 8]] (1, 4)\n",
+            "[[5 6 7 8]] (1, 4)\n"
+          ]
+        }
+      ],
+      "source": [
+        "fila_r1 = a[1, :]    # Vista de rango 1 de la segunda fila de a\n",
+        "fila_r2 = a[1:2, :]  # Vista de rango 2 de la segunda fila de a\n",
+        "fila_r3 = a[[1], :]  # Vista de ranfo 2 de la segunda fila de a\n",
+        "print (fila_r1, fila_r1.shape)\n",
+        "print (fila_r2, fila_r2.shape)\n",
+        "print (fila_r3, fila_r3.shape)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "iYqVtaD6qaMY"
+      },
+      "source": [
+        "Podemos hacer la misma distinción al acceder a las columnas de una matriz."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "PJAluA4FqaMY",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "22e8884b-a09b-4eb2-e091-892e87500725"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[ 2  6 10] (3,)\n",
+            "[[ 2]\n",
+            " [ 6]\n",
+            " [10]] (3, 1)\n"
+          ]
+        }
+      ],
+      "source": [
+        "col_r1 = a[:, 1]\n",
+        "col_r2 = a[:, 1:2]\n",
+        "print (col_r1, col_r1.shape)\n",
+        "print (col_r2, col_r2.shape)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "PMt05HC7qaMZ"
+      },
+      "source": [
+        "### Indexación avanzada\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "-l49FKg_qaMZ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "24315fe6-2611-4810-cba4-ca417b4c126b"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[1 4]\n",
+            "Resultado:\n",
+            "[[1 2]\n",
+            " [3 4]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "a = np.array([[1,2], [3, 4]])\n",
+        "print (a[[0, 1], [0, 1]])\n",
+        "\n",
+        "# El ejemplo de indexacion de una matriz entera es equivalente a esto:\n",
+        "# Indexar una matriz entera\n",
+        "indices = np.ix_([0, 1], [0, 1])\n",
+        "resultado = a[indices]\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "6NwtylSHqaMZ"
+      },
+      "source": [
+        "Al usar la indexacion de un matriz de enteros, puede reutilizar el mismo elemento de la matriz de origen:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "uAmd3gFYqaMZ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c1ffb30c-38c3-48f3-a58b-150868e629d5"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[2 2]\n",
+            "Resultado:\n",
+            "[2 2]\n"
+          ]
+        }
+      ],
+      "source": [
+        "print (a[[0, 0], [1, 1]])\n",
+        "\n",
+        "# Equivalente al ejemplo de indexacion de matriz de enteros\n",
+        "# Indexar una matriz de enteros\n",
+        "indices = np.array([[0, 0], [1, 1]])\n",
+        "resultado = a[indices[0], indices[1]]\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "FOVCDT4tqaMZ"
+      },
+      "source": [
+        "Un asunto  importante y extremadamente útil acerca de los recortes de una  matriz es que devuelven  *vistas (`views`)* en lugar de *copias (`copies`)*  de los datos de la matriz. Este es un área en la que NumPy  difiere de la lista de Python:  en las listas, estas son copias."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "BR_5P6aJqaMa",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8b6313f2-e204-40e5-aef0-873a374c8e35"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[5, 0, 3, 3],\n",
+              "       [7, 9, 3, 5],\n",
+              "       [2, 4, 7, 6],\n",
+              "       [8, 8, 1, 6],\n",
+              "       [7, 7, 8, 1]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 46
+        }
+      ],
+      "source": [
+        "np.random.seed(0)\n",
+        "x2 = np.random.randint(10, size=(5, 4))\n",
+        "x2"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "-J15zJjXqaMa",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "1e383816-77e7-4a5b-a0e3-cf2b53374356"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[5 0]\n",
+            " [7 9]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x2_sub = x2[:2, :2]\n",
+        "print(x2_sub)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jZwufbuwqaMa",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "cc44dff8-e37e-4b23-e00f-2dd283386186"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[99  0]\n",
+            " [ 7  9]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x2_sub[0, 0] = 99\n",
+        "print(x2_sub)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "44JeYQoZqaMa"
+      },
+      "source": [
+        "Este comportamiento predeterminado es realmente muy útil: significa que cuando trabajamos con grandes conjuntos de datos, podemos acceder y procesar partes de estos conjuntos de datos sin necesidad de copiar el búfer de datos.\n",
+        "\n",
+        "A pesar de las características  de las `vistas` de una  matriz, a veces es útil copiar de forma explícita los datos dentro de una matriz o una submatriz. Esto se puede hacer  con el método `copy()`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "x_pEqBRWqaMb",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b61430cc-94f3-4692-f22e-a657d0e8e8b8"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[99  0]\n",
+            " [ 7  9]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x2_sub_copy = x2[:2, :2].copy()\n",
+        "print(x2_sub_copy)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "GtNYYOe5qaMb",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "2774807d-8513-4bd8-f715-73d3d0dd0d43"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[42  0]\n",
+            " [ 7  9]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x2_sub_copy[0, 0] = 42\n",
+        "print(x2_sub_copy)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "e7MCSsi3qaMb",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4ccede3b-df16-4f9a-da45-6303c7de264f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[99  0  3  3]\n",
+            " [ 7  9  3  5]\n",
+            " [ 2  4  7  6]\n",
+            " [ 8  8  1  6]\n",
+            " [ 7  7  8  1]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(x2)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ujejSPYnHRJ2"
+      },
+      "source": [
+        "### Reshaping"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "RGpuTWaTHRJ2",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "3169987e-0b95-4f6f-9fb3-0b38a69d4fbf"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[1 2 3]\n",
+            " [4 5 6]\n",
+            " [7 8 9]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x4 = np.arange(1, 10).reshape((3, 3))\n",
+        "print(x4)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "RU_ETRzWHRJ2"
+      },
+      "source": [
+        "Ten en cuenta que para que esto funcione, el tamaño de la matriz inicial debe coincidir con el tamaño de la matriz rediseñada. Siempre que sea posible, el método `reshape` utilizará una `vista` sin copia de la matriz inicial.\n",
+        "\n",
+        "Otro patrón de `reshaping `, es la conversión de una matriz unidimensional en una fila o columna de una matriz bidimensional. Esto se puede hacer con el método `reshape`  o más fácilmente haciendo uso de `newaxis` dentro de una operación de división:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "b-LEzn0SHRJ3",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "3c6744e0-77b7-4054-afdd-fd70811559fb"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([1, 2, 3])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 58
+        }
+      ],
+      "source": [
+        "x5 = np.array([1, 2, 3])\n",
+        "x5"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "p4UfmxWjHRJ3",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "09176f2d-de33-4848-f87a-b1af5f09f6af"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Vector fila:\n",
+            "[[1 2 3]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# vector fila via reshape\n",
+        "# Convertimos el arreglo en un vector fila utilizando reshape\n",
+        "a = x5.reshape((1, -1))\n",
+        "\n",
+        "print(\"Vector fila:\")\n",
+        "print(a)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Pv8bWknUHRJ3",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "5e12746c-0de1-447b-f1c5-37ee21e1eb63"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Vector fila:\n",
+            "[[1 2 3]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# vector fila con newaxis\n",
+        "# Convertimos el arreglo en un vector fila utilizando np.newaxis\n",
+        "b = x5[np.newaxis, :]\n",
+        "\n",
+        "print(\"Vector fila:\")\n",
+        "print(b)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Q2pcC_zfHRJ4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "79c79f96-b345-46b2-9c65-64bd2a278af8"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Vector columna:\n",
+            "[[1]\n",
+            " [2]\n",
+            " [3]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# vector columna via reshape\n",
+        "# Convertimos el arreglo en un vector columna utilizando reshape\n",
+        "c = x5.reshape((-1, 1))\n",
+        "\n",
+        "print(\"Vector columna:\")\n",
+        "print(c)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "HcVHXqr-HRJ4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "cd6c6697-28d3-46d6-cabe-2258d4df715e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Vector columna:\n",
+            "[[1]\n",
+            " [2]\n",
+            " [3]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# vector columna con newaxis\n",
+        "# Convertir el arreglo en un vector columna utilizando np.newaxis\n",
+        "d = x5[:, np.newaxis]\n",
+        "\n",
+        "print(\"Vector columna:\")\n",
+        "print(d)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "collapsed": true,
+        "id": "YzFU6QFlHRJ4"
+      },
+      "source": [
+        "### Concatenación y  separación\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "sViXchcIHRJ5",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "43d3af52-d642-4587-9def-4b2fafa7464b"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([4, 5, 6, 7, 8, 9])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 67
+        }
+      ],
+      "source": [
+        "x = np.array([4, 5, 6])\n",
+        "y = np.array([7, 8, 9])\n",
+        "np.concatenate([x, y])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "9P1oTO3SHRJ5",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8143c143-77ad-4b52-f41f-fb63097a8fb2"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[ 4  5  6  7  8  9 99 99 99]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# concatenacion de dos o mas matrices\n",
+        "z = [99, 99, 99]\n",
+        "print(np.concatenate([x, y, z]))"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ExC9DeMgHRJ5",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "5ffc45f0-a623-47a8-cc00-c9613c209bd6"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[1, 2, 3],\n",
+              "       [4, 5, 6],\n",
+              "       [1, 2, 3],\n",
+              "       [4, 5, 6]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 69
+        }
+      ],
+      "source": [
+        "# concatendo una matriz dos veces\n",
+        "grid = np.array([[1, 2, 3],\n",
+        "                 [4, 5, 6]])\n",
+        "np.concatenate([grid, grid])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "FV3TV1wgHRJ6"
+      },
+      "source": [
+        "Para trabajar con matrices de distintas dimensiones, se usan las funciones `vstack` y `hstack`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "JXqPVFAeHRJ6",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "80881c9f-b2d5-4037-bad5-4c3293584d92"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado:\n",
+            "[[1 2 3]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x = np.array([0, 1, 2])\n",
+        "grid = np.array([[3, 4, 5],\n",
+        "                 [6, 5, 4]])\n",
+        "\n",
+        "# Se junta la matriz de manera vertical\n",
+        "# Unimos la matriz y el arreglo de manera vertical\n",
+        "aiter = np.vstack((x, grid))\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(a)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "tx_sdnkxHRJ7",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "eec2b049-e5a2-494c-d8a2-a71beda54f42"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado:\n",
+            "[[ 3  4  5 23]\n",
+            " [ 6  5  4 23]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Se junta la matriz de manera horizontal\n",
+        "y = np.array([[23],\n",
+        "              [23]])\n",
+        "# Unimos la matriz y la matriz de manera horizontal\n",
+        "b = np.hstack((grid, y))\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(b)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "collapsed": true,
+        "id": "0GWOBZtIHRJ7"
+      },
+      "source": [
+        "Lo contrario de la concatenación es la división o separación, que es implementado por las funciones `np.split`, `np.hsplit` y `np.vsplit`. Para cada uno de estas funciones , podemos pasar una lista de índices que dan los puntos de división.\n",
+        "\n",
+        "Ver:[https://numpy.org/doc/stable/reference/generated/numpy.split.html](https://numpy.org/doc/stable/reference/generated/numpy.split.html)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "gkXomQdcHRJ7",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "cc62534c-cc84-44cb-fc56-9c70f54ea11a"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[1 2 3] [44 95] [3 2 1]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x = [1, 2, 3, 44, 95, 3, 2, 1]\n",
+        "x1, x2, x3 = np.split(x, [3, 5])\n",
+        "print(x1, x2, x3)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "N3db3D7cHRJ7",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "9bb8c461-18de-4707-a6a9-cff7274a5d90"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 0,  1,  2,  3],\n",
+              "       [ 4,  5,  6,  7],\n",
+              "       [ 8,  9, 10, 11],\n",
+              "       [12, 13, 14, 15]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 76
+        }
+      ],
+      "source": [
+        "grid = np.arange(16).reshape((4, 4))\n",
+        "grid"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "-1wFFEyfHRJ8",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "d06c9b2a-5ca7-4826-fce9-39c28a0e567e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[0 1 2 3]\n",
+            " [4 5 6 7]]\n",
+            "[[ 8  9 10 11]\n",
+            " [12 13 14 15]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "grid1, grid2 = np.vsplit(grid, [2])\n",
+        "print(grid1)\n",
+        "print(grid2)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "-QSxKWNJHRJ8",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "223d40ac-3dc8-40b2-b90f-e57d95636d53"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[ 0  1]\n",
+            " [ 4  5]\n",
+            " [ 8  9]\n",
+            " [12 13]]\n",
+            "[[ 2  3]\n",
+            " [ 6  7]\n",
+            " [10 11]\n",
+            " [14 15]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "grid3, grid4 = np.hsplit(grid,[2])\n",
+        "print(grid3)\n",
+        "print(grid4)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tHP4XmEoHRKJ"
+      },
+      "source": [
+        "### Fancy\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "p8Sk55iPHRKK",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4832c17c-bbea-4cbb-b1e7-fc2568a1d4c6"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[51 92 14 71 60 20 82 86 74 74]\n"
+          ]
+        }
+      ],
+      "source": [
+        "rand = np.random.RandomState(42)\n",
+        "x = rand.randint(100, size=10)\n",
+        "print(x)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "WnihK-M2HRKM",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "6602cefc-82db-4e13-83df-79cb23b266fb"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[92, 20, 14]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 80
+        }
+      ],
+      "source": [
+        "# Accedemos a tres elementos diferentes\n",
+        "[x[1], x[5], x[2]]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "avs1AUSlHRKN"
+      },
+      "source": [
+        "Alternativamente, podemos pasar una sola lista o matriz de índices para obtener el mismo resultado:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "buKD93QUHRKN",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "93b77706-4a0e-4f62-b36d-629f869dd590"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado:\n",
+            "[51 14 60]\n"
+          ]
+        }
+      ],
+      "source": [
+        "rand = np.random.RandomState(42)\n",
+        "x = rand.randint(100, size=10)\n",
+        "indices = [0, 2, 4]\n",
+        "# Seleccionar elementos utilizando una lista de índices\n",
+        "resultado = x[indices]\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "pIU1Q9zyHRKO"
+      },
+      "source": [
+        "Cuando se utiliza fancy, la forma del resultado refleja la forma de las matrices de índice en lugar de la forma de la matriz que se indexa y trabaja  en múltiples  dimensiones:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "u4Baonx_HRKO",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "43e87d31-bf1b-4f2e-9e12-d03d02491305"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado:\n",
+            "[10  2]\n",
+            "Forma del resultado: (2,)\n"
+          ]
+        }
+      ],
+      "source": [
+        "rand = np.random.RandomState(42)\n",
+        "\n",
+        "x = np.arange(12).reshape((3, 4))\n",
+        "\n",
+        "indices_filas = rand.randint(0, arr.shape[0], size=2)\n",
+        "indices_columnas = rand.randint(0, arr.shape[1], size=2)\n",
+        "\n",
+        "# Seleccionamos los elementos utilizando indexación avanzada con matrices de índices\n",
+        "resultado = x[indices_filas, indices_columnas]\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(resultado)\n",
+        "print(\"Forma del resultado:\", resultado.shape)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "QFPQLUylHRKO",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a220a414-0084-459b-f177-997bfe609798"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 0,  1,  2,  3],\n",
+              "       [ 4,  5,  6,  7],\n",
+              "       [ 8,  9, 10, 11]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 83
+        }
+      ],
+      "source": [
+        "X = np.arange(12).reshape((3, 4))\n",
+        "X"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "BbqZMwVKHRKP"
+      },
+      "source": [
+        "Al igual que con la indexación estándar, el primer índice se refiere a la fila, y el segundo a la columna:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "JOmJykqdHRKP",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "9b269a44-acc3-47ab-b121-536337af67bd"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([ 2,  5, 11])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 97
+        }
+      ],
+      "source": [
+        "fila = np.array([0, 1, 2])\n",
+        "col = np.array([2, 1, 3])\n",
+        "X[fila, col]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5UbI7MM1HRKP"
+      },
+      "source": [
+        "Observa que el primer valor en el resultado es `X[0, 2]`, el segundo es `X[1, 1]`  y el tercero es `X[2, 3]`. El emparejamiento de índices en la indexación fancy  sigue todas las reglas del broadcasting, por ejemplo, si combinamos un vector de columna y un vector de fila dentro de los índices, obtenemos un resultado bidimensional:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ZHaBvrvmHRKQ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "bb7085e7-481e-49ef-f0d1-f96fb643e0e7"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado:\n",
+            "[ 2  5 11]\n",
+            "Forma del resultado: (3,)\n"
+          ]
+        }
+      ],
+      "source": [
+        "x = np.arange(24).reshape((6, 4))\n",
+        "\n",
+        "fila = np.array([0, 1, 2])\n",
+        "col = np.array([2, 1, 3])\n",
+        "\n",
+        "# Seleccionamos los elementos utilizando indexación avanzada con matrices de índices\n",
+        "resultado = x[fila, col]\n",
+        "\n",
+        "print(\"Resultado:\")\n",
+        "print(resultado)\n",
+        "print(\"Forma del resultado:\", resultado.shape)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "UY1C8fh7HRKQ"
+      },
+      "source": [
+        "Aquí, cada valor de fila se empareja con cada vector de columna, exactamente como se hace en broadcasting  de operaciones aritméticas. Por ejemplo:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "WlT7nSHMHRKQ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "9ef8c97e-b0ed-447e-bbb8-c01cebe610e0"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la suma:\n",
+            "[3 4 5]\n",
+            "Resultado de la suma:\n",
+            "[[11 12 13]\n",
+            " [24 25 26]]\n",
+            "Resultado del producto:\n",
+            "[[ 2  4  6]\n",
+            " [ 8 10 12]]\n",
+            "Resultado del producto:\n",
+            "[[[ 10  20]\n",
+            "  [ 60  80]]\n",
+            "\n",
+            " [[ 50  60]\n",
+            "  [140 160]]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Completar\n",
+        "# Suma entre un array 1D y un escalar\n",
+        "a = np.array([1, 2, 3])\n",
+        "b = 2\n",
+        "resultado = a + b\n",
+        "print(\"Resultado de la suma:\")\n",
+        "print(resultado)\n",
+        "\n",
+        "# Suma entre un array 2D y un vector columna\n",
+        "c = np.array([[1, 2, 3],\n",
+        "              [4, 5, 6]])\n",
+        "d = np.array([[10],\n",
+        "              [20]])\n",
+        "resultado = c + d\n",
+        "print(\"Resultado de la suma:\")\n",
+        "print(resultado)\n",
+        "\n",
+        "# Producto entre un array 2D y un escalar\n",
+        "e = np.array([[1, 2, 3],\n",
+        "              [4, 5, 6]])\n",
+        "f = 2\n",
+        "resultado = e * f\n",
+        "print(\"Resultado del producto:\")\n",
+        "print(resultado)\n",
+        "\n",
+        "# Producto entre un array 3D y un vector fila\n",
+        "g = np.array([[[1, 2],\n",
+        "               [3, 4]],\n",
+        "              [[5, 6],\n",
+        "               [7, 8]]])\n",
+        "h = np.array([10, 20])\n",
+        "resultado = g * h[:, np.newaxis]\n",
+        "print(\"Resultado del producto:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "3UA5Ps0cHRKd"
+      },
+      "source": [
+        "Siempre es importante recordar que en  la indexación fancy, el valor de retorno refleja la forma del broadcasting  de los índices, en lugar de la forma de la matriz que se indexa."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "QN9wN13cHRKd"
+      },
+      "source": [
+        "Para operaciones  más potentes, la indexación adornada se puede combinar con los otros esquemas de indexación que existen:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "p_gbcz40HRKe",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "550d9653-4871-4509-cbec-8d7a591435b7"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[ 0  1  2  3]\n",
+            " [ 4  5  6  7]\n",
+            " [ 8  9 10 11]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(X)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "TEFOFrl4HRKe",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "473964e7-412a-4f9d-d03f-6c7f18f89f05"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la combinación de indexación fancy e índice simple:\n",
+            "[1 9]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Combinando el indexado fancy y indices simples\n",
+        "arr = np.array([[0, 1, 2, 3],\n",
+        "                [4, 5, 6, 7],\n",
+        "                [8, 9, 10, 11]])\n",
+        "\n",
+        "filas = np.array([0, 2])  # Seleccionamos las filas 0 y 2\n",
+        "columna = 1  # Seleccionamos la columna 1\n",
+        "\n",
+        "resultado = arr[filas,columna]\n",
+        "print(\"Resultado de la combinación de indexación fancy e índice simple:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "BZcspK2-HRKe",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "53526724-46e5-4329-84b5-4c625d8da43e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la combinación de indexación fancy y recorte:\n",
+            "[[ 1  2]\n",
+            " [ 9 10]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Combinando el indexado fancy y el recorte\n",
+        "arr = np.array([[0, 1, 2, 3],\n",
+        "                [4, 5, 6, 7],\n",
+        "                [8, 9, 10, 11]])\n",
+        "\n",
+        "indices_filas = np.array([0, 2])  # Seleccionamos las filas 0 y 2\n",
+        "recorte_columnas = slice(1, 3)  # Seleccionamos las columnas 1 y 2\n",
+        "\n",
+        "resultado = arr[indices_filas, recorte_columnas]\n",
+        "print(\"Resultado de la combinación de indexación fancy y recorte:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "O1T_gLwoHRKf"
+      },
+      "source": [
+        "Así como el fancy  se puede utilizar para acceder a partes de una matriz, también se puede utilizar para modificar partes de una matriz. Por ejemplo, si  tenemos una matriz de índices y nos gustaría establecer los elementos correspondientes en una matriz a algún valor, podemos hacer lo siguiente:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ye2LR3_qHRKf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "5c73d25e-e6f3-47c0-cd1b-9365faafaea5"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[ 0 99 99  3 99  5  6  7 99  9]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x = np.arange(10)\n",
+        "i = np.array([2, 1, 8, 4])\n",
+        "x[i] = 99\n",
+        "print(x)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "R7FOcHtwHRKg"
+      },
+      "source": [
+        "Los índices repetidos con estas operaciones pueden causar algunos resultados potencialmente inesperados. Considera lo siguiente:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Ja7j27ctHRKg",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "67ee69fe-e77e-4e44-df95-0024a2252755"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[6. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x = np.zeros(10)\n",
+        "x[[0, 0]] = [4, 6]\n",
+        "print(x)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "collapsed": true,
+        "id": "O3wLVTgBHRKg"
+      },
+      "source": [
+        "El resultado de esta operación es asignar primero  `x[0] = 4`, seguido por `x[0] = 6`. Pero el resultado es que `x[0]` contiene el valor 6.\n",
+        "\n",
+        "Considera la siguiente operación:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "9Y9isBdeHRKg",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b187ae87-109d-42df-8c65-600faf549000"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([6., 0., 1., 1., 1., 0., 0., 0., 0., 0.])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 118
+        }
+      ],
+      "source": [
+        "i = [2, 3, 3, 4, 4, 4]\n",
+        "x[i] += 1\n",
+        "x"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "fLCn40UwHRKh"
+      },
+      "source": [
+        "En este caso algún resultado inesperado se debe conceptualmente  a que `x[i] +=1` se entiende como una abreviatura de `x[i] = x [i] + 1`. Cuando `x[i] + 1` es evaluado el resultado es asignado  a los índices en `x` . Con esto en mente, no es que el aumento que ocurre varias veces, sino la asignación, que conduce a los resultados  no intuitivos.\n",
+        "\n",
+        "Si quieremos  el otro comportamiento donde se repite la operación, se puede utilizar el método `at()` de `ufuncs`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "3rahnE5wHRKi",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e2f8513f-26cd-40df-a909-5fcae1dc3e9b"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la operación repetida utilizando at():\n",
+            "[6. 0. 5. 7. 9. 0. 0. 0. 0. 0.]\n"
+          ]
+        }
+      ],
+      "source": [
+        "x[i] += 1\n",
+        "i = [2, 3, 3, 4, 4, 4]\n",
+        "\n",
+        "# Operación repetida utilizando at()\n",
+        "np.add.at(x, i, 1)  # Suma 1 a los elementos seleccionados\n",
+        "\n",
+        "print(\"Resultado de la operación repetida utilizando at():\")\n",
+        "print(x)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0rziizOtHRKj"
+      },
+      "source": [
+        "El método `at()` realiza una aplicación  del operador dado en los índices especificados (aquí, `i`) con el valor especificado (aquí, `1`)."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "17TwhqScqaMm"
+      },
+      "source": [
+        "###  Expresiones vectorizadas"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "3QMUpEcqqaMn"
+      },
+      "source": [
+        "### Agregaciones\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "MLhcZaakqaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "79d51f0c-d201-4f96-90e5-8c9509acc696"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "47.44472811197369"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 121
+        }
+      ],
+      "source": [
+        "L = np.random.random(100)\n",
+        "sum(L)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0Y_nOzbsqaMn"
+      },
+      "source": [
+        "La sintaxis es bastante similar a la función de `sum` de  `NumPy`  y el resultado es el mismo en el caso más simple:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "WXgGIcQSqaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f3525c4f-31d1-46a1-db04-080f6c4f3c0f"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "47.4447281119737"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 122
+        }
+      ],
+      "source": [
+        "np.sum(L)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "7FhCoi_JqaMn"
+      },
+      "source": [
+        "Sin embargo, debido a que la operación se ejecuta  en código compilado, la versión `NumPy` de la operación se calcula mucho más rápidamente:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "L1FKgXK_qaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "be1e154c-e3a5-496b-9f53-c92df3d9bb86"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "85.7 ms ± 1.25 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)\n",
+            "360 µs ± 7.13 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)\n"
+          ]
+        }
+      ],
+      "source": [
+        "matriz_grande = np.random.rand(1000000)\n",
+        "%timeit sum(matriz_grande)\n",
+        "%timeit np.sum(matriz_grande)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "7I3yj7HrqaMn"
+      },
+      "source": [
+        "La función `sum` y la función `np.sum` no son idénticas, lo que a veces puede conducir a la confusión.  En particular, sus argumentos opcionales tienen significados diferentes  y `np.sum` es válido a  varias dimensiones de una matriz."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "46tC54BJqaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b99630b7-73c2-4686-a2b3-49f5768e406f"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(7.071203171893359e-07, 0.9999997207656334)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 125
+        }
+      ],
+      "source": [
+        "# Otras funciones min y max\n",
+        "min(matriz_grande), max(matriz_grande)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "RcZyNPFzqaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "fa88ad4a-b5f9-43b2-c512-b56d5be04d00"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "61.6 ms ± 1.01 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)\n",
+            "429 µs ± 17.4 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)\n"
+          ]
+        }
+      ],
+      "source": [
+        "%timeit min(matriz_grande)\n",
+        "%timeit np.min(matriz_grande)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "FKC12DzRqaMn"
+      },
+      "source": [
+        "Todas estas funciones también están disponibles como métodos en la clase `ndarray`. Por ejemplo, `np.mean(data)` y `data.mean()` en el ejemplo siguiente son equivalentes:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ubeb597jqaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "36930200-7324-4b1b-9a43-3f6a8d1a4902"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "0.1014614979396541"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 127
+        }
+      ],
+      "source": [
+        "data = np.random.normal(size=(15, 15))\n",
+        "np.mean(data)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "otNwU7ucqaMn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "bac83e60-044d-4ede-9451-6692c89ead0a"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "0.1014614979396541"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 128
+        }
+      ],
+      "source": [
+        "data.mean()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "AK90lEACqaMn"
+      },
+      "source": [
+        "Un tipo común de operación de agregación es un agregado a lo largo de una fila o columna."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "s_Z0q4xHqaMo",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "524107a8-1570-4718-fa00-d8a1dc29bfc9"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[0.1876222  0.95137218 0.44469986 0.47577551 0.43077223 0.49532871]\n",
+            " [0.58341548 0.27654054 0.96025749 0.12685672 0.38686572 0.29660634]\n",
+            " [0.99907694 0.00377931 0.82984241 0.75816216 0.01685189 0.23811077]\n",
+            " [0.28054238 0.63922302 0.31781681 0.93091841 0.51938547 0.77906154]\n",
+            " [0.4460392  0.93142267 0.00176855 0.90189974 0.47317235 0.28021716]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "M = np.random.random((5, 6))\n",
+        "print(M)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "9q0RaQs4qaMo"
+      },
+      "source": [
+        "De forma predeterminada, cada función de agregación de  `NumPy`  devolverá el agregado sobre toda la matriz:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Mvn_GqRDqaMo",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "2f3eec6f-d321-4989-d075-cb2b526b60ee"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "14.963403762355242"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 130
+        }
+      ],
+      "source": [
+        "M.sum()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "vk6BEGcBqaMo"
+      },
+      "source": [
+        "Las funciones de agregación toman un argumento adicional que especifica el eje a lo largo del cual se calcula el agregado. Por ejemplo, podemos encontrar el valor de la suma y el  mínimo de cada columna especificando `axis = 0`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "m45aeskcqaMp",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4567db1f-ae78-4f92-8600-7336b117ba6b"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([2.4966962 , 2.80233772, 2.55438512, 3.19361254, 1.82704766,\n",
+              "       2.08932452])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 131
+        }
+      ],
+      "source": [
+        "M.sum(axis= 0)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "7hcqoOstqaMp",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "76cab3a7-f5ac-4c89-9e1f-186f1cd94c60"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(10, 15)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 132
+        }
+      ],
+      "source": [
+        "data = np.random.normal(size=(5, 10, 15))\n",
+        "data.sum(axis=0).shape"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Rp1FO9UoqaMp",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "1d4f92b6-5e98-491c-de10-1b56895e11e4"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(10,)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 133
+        }
+      ],
+      "source": [
+        "data.sum(axis=(0, 2)).shape"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "aD18Ek0-qaMp",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "ab135d51-67ee-4d18-a235-21d962e9681b"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "-70.65297874557393"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 134
+        }
+      ],
+      "source": [
+        "data.sum()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2m9jJXUYqaMp"
+      },
+      "source": [
+        "Algunas funciones de agregación en `Numpy ` son :\n",
+        "\n",
+        "\n",
+        "|Nombre de funcion  | VersionNaN-safe     | Descripcion                                   |\n",
+        "|-------------------|---------------------|-----------------------------------------------|\n",
+        "| ``np.sum``        | ``np.nansum``       | Calcula suma de elementos                     |\n",
+        "| ``np.prod``       | ``np.nanprod``      | Calcula el producto de elementos              |\n",
+        "| ``np.mean``       | ``np.nanmean``      | Calcula la media de elementos                 |\n",
+        "| ``np.std``        | ``np.nanstd``       | Calcula la desviacion estandar                |\n",
+        "| ``np.var``        | ``np.nanvar``       | Calcula la  varianza                          |\n",
+        "| ``np.min``        | ``np.nanmin``       | Encuentra el minimo valor                     |\n",
+        "| ``np.max``        | ``np.nanmax``       | Encuentra el maximo valor                     |\n",
+        "| ``np.argmin``     | ``np.nanargmin``    | Encuenta el index del minimo valor            |\n",
+        "| ``np.argmax``     | ``np.nanargmax``    | Encuentra el index del maximo valor           |\n",
+        "| ``np.median``     | ``np.nanmedian``    | Calcula la mediana de elementos               |\n",
+        "| ``np.percentile`` | ``np.nanpercentile``| Calcula el rango estatistico de elementos     |\n",
+        "| ``np.any``        | N/A                 | Evalua si algun elemento es true              |\n",
+        "| ``np.all``        | N/A                 | Evalua si todos los elementos son true        |\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2Sf0e5STqaMp"
+      },
+      "source": [
+        "#### Broadcasting\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "5Fm9Ue4dqaMp",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "92c654f5-ee5a-49b4-bd00-8e3456544167"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([2, 7, 3])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 135
+        }
+      ],
+      "source": [
+        "a = np.array([0, 1, 2])\n",
+        "b = np.array([2, 6, 1])\n",
+        "a + b"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "8eGn-GPsqaMq"
+      },
+      "source": [
+        "El  `broadcasting` permite que estos tipos de operaciones binarias se realicen en matrices de diferentes tamaños; por ejemplo, podemos añadir  un escalar (una matriz de dimensión cero) a una matriz:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "OEK6G1FPqaMq",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "81bc3eb4-3c62-4251-95e5-fc1834fbce4f"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([5, 6, 7])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 136
+        }
+      ],
+      "source": [
+        "a + 5\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "9ejWt-p-qaMq"
+      },
+      "source": [
+        "Podemos extender de manera similar esto a matrices de mayor dimensión. Veamos el resultado cuando agregamos una matriz unidimensional a una matriz bidimensional:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "sWyguM0TqaMq",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f451d63f-33d4-4f7a-c5da-58f3254f4d29"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 0,  1,  2,  3],\n",
+              "       [ 4,  5,  6,  7],\n",
+              "       [ 8,  9, 10, 11],\n",
+              "       [12, 13, 14, 15]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 137
+        }
+      ],
+      "source": [
+        "A = np.arange(16).reshape(4, 4)\n",
+        "b = np.arange(4)\n",
+        "A"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "6s2ja74PqaMr",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "ccc56f70-ca13-4a61-d8b9-ea6348d68a2e"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 0,  2,  4,  6],\n",
+              "       [ 4,  6,  8, 10],\n",
+              "       [ 8, 10, 12, 14],\n",
+              "       [12, 14, 16, 18]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 138
+        }
+      ],
+      "source": [
+        "A + b"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "UZHfVQEAqaMr"
+      },
+      "source": [
+        "Podemos aplicar el  `broadcasting` en dos matrices. Considere el siguiente ejemplo:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "FgFkSWCRqaMr",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b8e0e113-5eb3-4fae-c0e5-7c4bd03e2b84"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la suma:\n",
+            "[3 4 5]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Suma entre un array 1D y un escalar\n",
+        "a = np.array([1, 2, 3])\n",
+        "b = 2\n",
+        "resultado = a + b\n",
+        "print(\"Resultado de la suma:\")\n",
+        "print(resultado)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "3BsOFYg_qaMr",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "7eb29c9c-cfc8-410d-d10e-0241c09060c1"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la suma:\n",
+            "[[11 12 13]\n",
+            " [24 25 26]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Suma entre un array 2D y un vector columna\n",
+        "c = np.array([[1, 2, 3],\n",
+        "              [4, 5, 6]])\n",
+        "d = np.array([[10],\n",
+        "              [20]])\n",
+        "resultado = c + d\n",
+        "print(\"Resultado de la suma:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "IF30FjFtqaMr",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "805f9ed2-973b-4ac5-da88-e99d60872b73"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado del producto:\n",
+            "[[ 2  4  6]\n",
+            " [ 8 10 12]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Producto entre un array 2D y un escalar\n",
+        "e = np.array([[1, 2, 3],\n",
+        "              [4, 5, 6]])\n",
+        "f = 2\n",
+        "resultado = e * f\n",
+        "print(\"Resultado del producto:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "hX8lxLr8qaMs",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c6a1428c-5058-40b8-c68a-47792da0ae37"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado del producto:\n",
+            "[[[ 10  20]\n",
+            "  [ 60  80]]\n",
+            "\n",
+            " [[ 50  60]\n",
+            "  [140 160]]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Producto entre un array 3D y un vector fila\n",
+        "g = np.array([[[1, 2],\n",
+        "               [3, 4]],\n",
+        "              [[5, 6],\n",
+        "               [7, 8]]])\n",
+        "h = np.array([10, 20])\n",
+        "resultado = g * h[:, np.newaxis]\n",
+        "print(\"Resultado del producto:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "44rabvtDqaMs"
+      },
+      "source": [
+        "###  Regla del broadcasting\n",
+        "\n",
+        "El `broadcasting` en `NumPy` sigue un estricto conjunto de reglas para determinar la interacción entre dos matrices :\n",
+        "\n",
+        "* Regla 1: Si las dos matrices difieren en su número de dimensiones, la forma de la matriz que tiene menos dimensiones se rellena con unos en el lado principal (izquierdo).\n",
+        "\n",
+        "* Regla 2: Si la forma de los dos matrices no coincide con ninguna dimensión, la matriz con la forma igual a 1 en esa dimensión se estira para que coincida con la otra dimensión.\n",
+        "\n",
+        "* Regla 3: Si en cualquier dimensión los tamaños son distintos y ninguno es igual a 1, se genera un error."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "cthhoMVUqaMs"
+      },
+      "source": [
+        "### Un útil truco:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "TLkpSl3hqaMs",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "2d758c2b-667c-41a5-8311-0a85a217e1dd"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(4,)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 143
+        }
+      ],
+      "source": [
+        "J = np.arange(0, 40, 10)\n",
+        "J.shape"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "KhXkyiTpqaMs",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "23234792-d094-4d6e-acf5-8cca4fd21393"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(4, 1)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 144
+        }
+      ],
+      "source": [
+        "J = J[:, np.newaxis]  # agregamos un nuevo eje ->  matriz 2D\n",
+        "J.shape"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Zb16ZWGsqaMs",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "acde178a-284e-47d2-d068-349b0102b669"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 0],\n",
+              "       [10],\n",
+              "       [20],\n",
+              "       [30]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 145
+        }
+      ],
+      "source": [
+        "J"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ncQuGxd5qaMs",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "ca538025-6bc2-4830-ef5c-8edf9cdebed2"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 3],\n",
+              "       [13],\n",
+              "       [23],\n",
+              "       [33]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 146
+        }
+      ],
+      "source": [
+        "J + 3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "1b5uLnfzqaMt"
+      },
+      "source": [
+        "### Comparaciones, máscaras y lógica Booleana\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "MeYaAuW_qaMt",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f60a3786-82d9-4822-f062-2d6475924a3b"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([ True,  True, False, False])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 147
+        }
+      ],
+      "source": [
+        "a1 = np.array([1, 2, 3, 4])\n",
+        "b1 = np.array([4, 3, 2, 1])\n",
+        "a1 < b1"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Aqhi445LqaMt",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "1b3d0817-a131-415f-c639-ec9410713c2a"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "False"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 148
+        }
+      ],
+      "source": [
+        "np.all(a1 < b1)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Mvvqq-tyqaMt",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "bd69397f-a007-4f78-8264-b7c87d558d32"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 149
+        }
+      ],
+      "source": [
+        "np.any(a1 < b1)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "_hKNRIasqaMt",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e723ca59-5a93-46ff-ab71-99b8dd27a4c4"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Algunos elementos en a1 son menores que los elementos de b1\n"
+          ]
+        }
+      ],
+      "source": [
+        "if np.all(a1 < b1):\n",
+        "    print(\" Todos los elementos en a1 son menores que los elementos en b1 \")\n",
+        "elif np.any(a1 < b1):\n",
+        "    print(\"Algunos elementos en a1 son menores que los elementos de b1\")\n",
+        "else:\n",
+        "    print(\"Todos los elementos en b1 son menores que los elementos de a1\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2nLXUCapqaMt"
+      },
+      "source": [
+        "Al aparecer en una expresión aritmética junto con un número escalar, u otra matriz `NumPy` con un tipo de datos numéricos, una matriz booleana se convierte en una matriz numérica con valores `0` y `1` en lugar de `False` y `True`, respectivamente."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "uHL9SWIVqaMu"
+      },
+      "outputs": [],
+      "source": [
+        "# Matriz booleana\n",
+        "matriz_bool = np.array([[True, False],\n",
+        "                        [False, True]])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Zo0ypRZZqaMu"
+      },
+      "outputs": [],
+      "source": [
+        "# Matriz numérica\n",
+        "matriz_num = np.array([[1, 2],\n",
+        "                       [3, 4]])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "xKfdwvatqaMu",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "388a23b7-0acd-4935-c2c7-357034b85f46"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Resultado de la operación de suma:\n",
+            "[[2 2]\n",
+            " [3 5]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Operación de suma entre la matriz booleana y la matriz numérica\n",
+        "resultado = matriz_bool + matriz_num\n",
+        "\n",
+        "print(\"Resultado de la operación de suma:\")\n",
+        "print(resultado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tB_6ydqXqaMu"
+      },
+      "source": [
+        "Esta es una propiedad útil para la computación condicional, como cuando se definen funciones."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "_ql1WHMbqaMu",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "07086f00-ee6b-4dc8-b08f-c30464ae31b6"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.\n",
+            " 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  1.5 1.5 1.5\n",
+            " 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5\n",
+            " 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5\n",
+            " 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 0.  0.  0.  0.  0.  0.  0.\n",
+            " 0.  0.  0.  0.  0.  0.  0.  0.  0.  0. ]\n"
+          ]
+        }
+      ],
+      "source": [
+        "def pulso(t, posicion, altura, ancho):\n",
+        "    return altura * (t >= posicion) * (t <= (posicion + ancho))\n",
+        "# Asiganmos parámetros del pulso\n",
+        "posicion = 2\n",
+        "altura = 1.5\n",
+        "ancho = 3\n",
+        "\n",
+        "# Asignamos alores de tiempo\n",
+        "t = np.linspace(0, 6, 100)\n",
+        "\n",
+        "# GeneraMOS UN pulso\n",
+        "pulso_generado = pulso(t, posicion, altura, ancho)\n",
+        "\n",
+        "print(pulso_generado)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "VpGU0FGBqaMu"
+      },
+      "source": [
+        "### Matrices booleanas como máscaras\n",
+        "\n",
+        "Revisar: [masked array](https://docs.scipy.org/doc/numpy/reference/maskedarray.html)."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "4PQgtpS4qaMu",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "35a56f62-4eca-4950-d2af-7e3239d12528"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([False, False,  True, False, False,  True])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 156
+        }
+      ],
+      "source": [
+        "k = np.array([1, 3, -1, 5, 7, -1])\n",
+        "mask = (k < 0)\n",
+        "mask"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "KJ9jFSKuqaMv",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "1f833d6b-72ac-4ee2-c263-da7ff54ba89b"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[5, 0, 3, 3],\n",
+              "       [7, 9, 3, 5],\n",
+              "       [2, 4, 7, 6]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 157
+        }
+      ],
+      "source": [
+        "# Un ejemplo bidimensional\n",
+        "rng = np.random.RandomState(0)\n",
+        "z1 = rng.randint(10, size=(3, 4))\n",
+        "z1"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "NXAwAvs8qaMv",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "7bf1c25f-8003-40ab-e6c3-a8e4c84d1b80"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[[[5 0 3 3]\n",
+            "  [7 9 3 5]\n",
+            "  [2 4 7 6]]\n",
+            "\n",
+            " [[8 8 1 6]\n",
+            "  [7 7 8 1]\n",
+            "  [5 9 8 9]]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Un ejemplo tridimensional de tamaño (2, 3, 4)\n",
+        "rng = np.random.RandomState(0)\n",
+        "z2 = rng.randint(10, size=(2, 3, 4))\n",
+        "print(z2)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "IvBwaoXEqaMv"
+      },
+      "source": [
+        "Ahora, para seleccionar estos valores de la matriz, podemos simplemente indexar en esta matriz booleana, esto se conoce como una operación de `enmascaramiento`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "osgH-qNWqaMv",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4c5103fe-1b2c-4526-b05a-8c588400b093"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[ 1  4  6  7  9 11 14 19 20 21 24]\n"
+          ]
+        }
+      ],
+      "source": [
+        "z2 = np.array([[[1, 2, 3, 4],\n",
+        "                [5, 6, 7, 8],\n",
+        "                [9, 10, 11, 12]],\n",
+        "\n",
+        "               [[13, 14, 15, 16],\n",
+        "                [17, 18, 19, 20],\n",
+        "                [21, 22, 23, 24]]])\n",
+        "\n",
+        "mask = np.array([[[True, False, False, True],\n",
+        "                  [False, True, True, False],\n",
+        "                  [True, False, True, False]],\n",
+        "\n",
+        "                 [[False, True, False, False],\n",
+        "                  [False, False, True, True],\n",
+        "                  [True, False, False, True]]])\n",
+        "\n",
+        "# Utilizamos el enmascaramiento para seleccionar elementos de z2\n",
+        "result = z2[mask]\n",
+        "\n",
+        "print(result)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "J1tyYXNeqaMv"
+      },
+      "source": [
+        "El siguiente ejemplo muestra cómo sumar la matriz de enmascaramiento,  donde `True` representa uno y `False` representa 0."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "aTqwfAtAqaMv",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8fa22078-6e90-459a-8f90-806c6e3e3500"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "3\n"
+          ]
+        }
+      ],
+      "source": [
+        "mask = np.array([[True, False, True],\n",
+        "                 [False, True, False]])\n",
+        "\n",
+        "# Sumamos la matriz de enmascaramiento\n",
+        "result = np.sum(mask)\n",
+        "\n",
+        "print(result)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "oqDn9SxmHRKr"
+      },
+      "source": [
+        "### Lectura recomendada: [Numpy Reference](https://docs.scipy.org/doc/numpy/reference/)."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ZstWnij4qaMw"
+      },
+      "outputs": [],
+      "source": []
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.7.10"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
